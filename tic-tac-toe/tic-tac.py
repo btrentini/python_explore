@@ -12,6 +12,12 @@ error = "Choose any of {remaining}"
 validation_check = False
 
 
+def replay():
+
+    again = input("Play again? [ y / any key to exit ]: ").upper().strip()
+
+    return again == "Y"
+
 def validate_entry(position):
 
     global board
@@ -48,7 +54,7 @@ def check_outcome():
     elif len(set(board[0:3])) == 1:
         game_on = False
 
-    #test columns
+    # test columns
     if len(set(board[0::3])) == 1:
         game_on = False
     elif len(set(board[1::3])) == 1:
@@ -62,9 +68,9 @@ def check_outcome():
     elif len(set(board[2:8:2])) == 1:
         game_on = False
 
-    # test for a tie
+    # test for a tie - Todo: Predict Tie
     elif len(set(board[::])) == 2:
-        player = "EMPATE: NINGUEM "
+        player = "TIE: NO ONE "
         game_on = False
     else:
         return game_on
@@ -119,7 +125,7 @@ def define_players():
         players[0] = input(
             f"P1 do you want {options[0]} or {options[1]}?: ").upper().strip()
 
-    players[1] = options.pop(options not in players)
+    players[1] = list(set(options) - set(players))[0]
 
     return players
 
@@ -138,7 +144,8 @@ def reload():
     player = 0
     game_on = True
     again = "Y"
-    error = ""
+    error = "Choose any of {remaining}"
+    validation_check = False
 
 
 def main():
@@ -147,7 +154,7 @@ def main():
 
     print("==== \tTIC TAC TOE v1\t ====")
 
-    while again == "Y":
+    while True:
         reload()
         define_players()
 
@@ -156,11 +163,12 @@ def main():
             update_board(move())
             check_outcome()
 
-        print(f"\n\t [ P{player} ] GANHOU!\n")
+        print(f"\n\t [ P{player} ] WINS!\n")
         print_board()
         print("\n\t -- end\n")
 
-        again = input("Play again? [ y / any key to exit ]: ").upper().strip()
+        if not replay():
+            break
 
 
 main()
