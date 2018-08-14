@@ -8,36 +8,63 @@ board = [f" {i+1} " for i in range(0, 9)]
 player = 0
 game_on = True
 again = "Y"
+error = "Choose any of {remaining}"
+validation_check = False
 
 
 def validate_entry(position):
 
     global board
-    print(type(position), " : ", position)
+    global error
 
-    if position in [x for x in range(1, 10)] \
-            and position in \
-                [int(x.strip()) if x.isdigit() else -99 for x in list(set(board))]:
+    remaining = [int(x.strip())
+                 for x in list(set(board)) if x.strip().isdigit()]
+
+    if not position.isdigit():
+        print(f"\n\tInvalid entry. \n\tPlease choose any of {remaining}")
+        return False
+    elif int(position) not in [x for x in list(range(1, 10))]:
+        print(f"\n\tOutside Boundaries. \n\tPlease choose any of {remaining}")
+        return False
+    elif int(position) not in remaining:
+        print(f"\n\tItem taken. \n\tPlease choose any of {remaining}")
+        return False
+    else:
         return True
+
+    return False
 
 
 def check_outcome():
 
     global game_on
-    global player
+    global error
 
+    # test rows
     if len(set(board[6:9])) == 1:
         game_on = False
     elif len(set(board[3:6])) == 1:
         game_on = False
     elif len(set(board[0:3])) == 1:
         game_on = False
+
+    #test columns
+    if len(set(board[0::3])) == 1:
+        game_on = False
+    elif len(set(board[1::3])) == 1:
+        game_on = False
+    elif len(set(board[2::3])) == 1:
+        game_on = False
+
+    # test diagonals
     elif len(set(board[::4])) == 1:
         game_on = False
     elif len(set(board[2:8:2])) == 1:
         game_on = False
+
+    # test for a tie
     elif len(set(board[::])) == 2:
-        player = "NINGUEM "
+        player = "EMPATE: NINGUEM "
         game_on = False
     else:
         return game_on
@@ -70,16 +97,16 @@ def move():
         player = 1
 
     item = players[player - 1]
-    msg = f"\n [ P{player} ] > where do you want to place your {item}?: "
-    position = int(input(f"{msg}").strip())
 
-    if validate_entry(position):
-        position = position - 1
-        print("OK")
+    global validation_check
+    validation_check = False
+
+    while not validation_check:
+        msg = f"\n [ P{player} ] > where do you want to place your {item}?: "
+        position = input(f"{msg}").strip()
+        validation_check = validate_entry(position)
     else:
-        print("INVALID")
-
-    return position
+        return int(position) - 1
 
 
 def define_players():
@@ -104,12 +131,14 @@ def reload():
     global player
     global game_on
     global again
+    global error
 
     players = ["", ""]
     board = [f" {i+1} " for i in range(0, 9)]
     player = 0
     game_on = True
     again = "Y"
+    error = ""
 
 
 def main():
@@ -127,7 +156,7 @@ def main():
             update_board(move())
             check_outcome()
 
-        print(f"\n\t {player} GANHOU!\n")
+        print(f"\n\t [ P{player} ] GANHOU!\n")
         print_board()
         print("\n\t -- end\n")
 
