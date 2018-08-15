@@ -3,13 +3,24 @@ Python tictactoe game as exercise for udemy's training
 '''
 from random import randint
 
-players = ["", ""]
+players = []
 board = [f" {i+1} " for i in range(0, 9)]
+remaining = []
 player = 0
 game_on = True
 again = "Y"
 error = "Choose any of {remaining}"
 validation_check = False
+
+
+def get_remaining():
+
+    global remaining
+
+    remaining = [int(x.strip())
+                 for x in list(set(board)) if x.strip().isdigit()]
+
+    return remaining
 
 
 def replay():
@@ -18,13 +29,13 @@ def replay():
 
     return again == "Y"
 
+
 def validate_entry(position):
 
     global board
     global error
 
-    remaining = [int(x.strip())
-                 for x in list(set(board)) if x.strip().isdigit()]
+    get_remaining()
 
     if not position.isdigit():
         print(f"\n\tInvalid entry. \n\tPlease choose any of {remaining}")
@@ -45,6 +56,7 @@ def check_outcome():
 
     global game_on
     global error
+    global player
 
     # test rows
     if len(set(board[6:9])) == 1:
@@ -74,6 +86,13 @@ def check_outcome():
         game_on = False
     else:
         return game_on
+
+
+def clear_board(position):
+
+    global board
+
+    board[position] = f" {position +1}"
 
 
 def update_board(position):
@@ -138,6 +157,7 @@ def reload():
     global game_on
     global again
     global error
+    global validation_check
 
     players = ["", ""]
     board = [f" {i+1} " for i in range(0, 9)]
