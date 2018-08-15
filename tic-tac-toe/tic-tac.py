@@ -82,17 +82,10 @@ def check_outcome():
 
     # test for a tie - Todo: Predict Tie
     elif len(set(board[::])) == 2:
-        player = "TIE: NO ONE "
+        player = "TIE"
         game_on = False
     else:
         return game_on
-
-
-def clear_board(position):
-
-    global board
-
-    board[position] = f" {position +1}"
 
 
 def update_board(position):
@@ -183,7 +176,11 @@ def main():
             update_board(move())
             check_outcome()
 
-        print(f"\n\t [ P{player} ] WINS!\n")
+        if player != "TIE":
+            print(f"\n\t [ P{player} ] IS THE WINNER!\n")
+        else:
+            print(f"\n\t DRAW : BOTH LOSERS! ")
+
         print_board()
         print("\n\t -- end\n")
 
