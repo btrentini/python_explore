@@ -1,5 +1,5 @@
 '''
-Python tictactoe game as exercise for udemy's training
+Python tictactoe game as exercise for udemys training
 '''
 from random import randint
 
@@ -11,16 +11,6 @@ game_on = True
 again = "Y"
 error = "Choose any of {remaining}"
 validation_check = False
-
-
-def get_remaining():
-
-    global remaining
-
-    remaining = [int(x.strip())
-                 for x in list(set(board)) if x.strip().isdigit()]
-
-    return remaining
 
 
 def replay():
@@ -35,7 +25,8 @@ def validate_entry(position):
     global board
     global error
 
-    get_remaining()
+    remaining = [int(x.strip())
+                 for x in list(set(board)) if x.strip().isdigit()]
 
     if not position.isdigit():
         print(f"\n\tInvalid entry. \n\tPlease choose any of {remaining}")
