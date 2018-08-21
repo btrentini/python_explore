@@ -10,7 +10,7 @@ class Deck:
     def __init__(self):
         '''Initialisation for Player'''
 
-        self.ranks = (str(i) for i in range(1, 14))
+        self.ranks = (f'{i:2d}'for i in range(1, 14))
         self.suits = ("♣", "♦", "♥", "♠")
 
     def shuffle(self):

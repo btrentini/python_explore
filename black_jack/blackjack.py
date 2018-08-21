@@ -19,16 +19,17 @@ def actions():
     for idx, act in enumerate(actions):
         print(f"\t{idx+1} : {act}")
 
-
     while True:
         try:
             action_chosen = int(input("\n\tAction > "))
-        except:
-            print(f"\t[!] Choose a valid action using numbers 1 to {len(actions)}")
+        except ValueError:
+            print(
+                f"\t[!] Choose a valid action using numbers 1 to {len(actions)}")
             continue
         else:
-            if action_chosen <1 or action_chosen > len(actions):
-                print(f"\t[!] Choose a valid action using numbers 1 to {len(actions)}")
+            if action_chosen < 1 or action_chosen > len(actions):
+                print(
+                    f"\t[!] Choose a valid action using numbers 1 to {len(actions)}")
                 continue
             else:
                 break
@@ -45,8 +46,7 @@ def blackjack():
     print("\n\tWhat do you want to do?")
     actions()
 
-    print(player.hand[0][0])
-
+    print(int(player.hand[0][0:2].strip()) + int(player.hand[1][0:2].strip()))
 
 
 if __name__ == "__main__":
@@ -54,7 +54,6 @@ if __name__ == "__main__":
     print("\n=====================================")
     print("\tBLACKJACK")
     print("=====================================")
-
 
     # Initialises the Deck
     mydeck = dk.Deck()
