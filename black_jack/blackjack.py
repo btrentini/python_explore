@@ -8,8 +8,18 @@ import hand as hd
 
 def check_play():
     '''Checks game progress and actions taken'''
-    pass
 
+    temp_sum = 0
+
+    for idx, card in enumerate(PLAYER.hand.cards):
+
+        if len(card) == 3:
+            temp_sum += MYDECK.card_values[card[0:2]]
+        else:
+            temp_sum += MYDECK.card_values[card[0]]
+
+
+    print(PLAYER.cards_sum(temp_sum))
 
 def actions():
     '''Allow user to choose an action. Eg: Hit or Surrender'''
@@ -36,7 +46,7 @@ def actions():
             else:
                 break
 
-    return action_chosen
+    return actions[action_chosen-1]
 
 
 def bet():
@@ -63,14 +73,23 @@ def bet():
     PLAYER.update_balance(-bet)
 
     print(f"\n\tP1     > {PLAYER.print_hand()}")
-    print(f"\tDealer > {PLAYER.print_hand()}")
+    print(f"\tDealer > {DEALER.print_hand()}")
 
 
 def blackjack():
     '''Starts the game and contains function calls'''
     bet()
-    check_play()
-    actions()
+
+    while True:
+        check_play()
+        action = actions().upper()
+
+        if action == "HIT":
+            PLAYER.hand.hit(PACK)
+            continue
+
+        if action == "SURRENDER":
+            break
 
 
 if __name__ == "__main__":
@@ -87,6 +106,6 @@ if __name__ == "__main__":
     PLAYER = pl.Player(player_type="user", balance=500,
                        hand=hd.Hand(PACK[0:2]))
     DEALER = pl.Player(player_type="dealer", balance=5000,
-                       hand=hd.Hand(PACK[3:5]))
+                       hand=hd.Hand(PACK[2:3]))
 
     blackjack()
