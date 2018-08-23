@@ -13,6 +13,7 @@ class Player:
         self.balance = balance
         self.hand = hand
         self.sum_cards = 0
+        self.result = ""
 
     def update_balance(self, balance):
         '''updates player balance'''
@@ -31,13 +32,21 @@ class Player:
 
         self.sum_cards = sum_cards
 
+        print("__________________________")
+        print(f"{self.hand.cards} = {self.sum_cards}")
+        print("__________________________")
+
+
         if len(self.hand.cards) == 2 and self.sum_cards == 21:
-            print("BALCK JACK")
+            self.result = "BJ"
+            self.sum_cards = 0
         if self.sum_cards == 21:
-            print("21")
+            self.result = "21"
+            self.sum_cards = 0
         elif self.sum_cards > 21:
-            print("BURST")
+            self.result = "BURST"
+            self.sum_cards = 0
         else:
             pass
 
-        return self.sum_cards
+        return self.result
