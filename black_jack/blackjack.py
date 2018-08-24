@@ -1,5 +1,7 @@
 """
 Blackjack main class created by Bruno Trentini
+
+- Need to implement mechanism to deal with further bets
 """
 import deck as dk
 import player as pl
