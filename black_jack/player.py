@@ -19,6 +19,13 @@ class Player:
         '''updates player balance'''
         self.balance += balance
 
+    def check_balance(self, bet):
+
+        if self.balance >= bet:
+            print("This is ok")
+        else:
+            print("This is NOT ok")
+
     def print_hand(self):
         '''prints the player hand'''
 
