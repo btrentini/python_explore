@@ -10,8 +10,11 @@ import hand as hd
 def check_bets():
     '''do nothing here'''
 
-    if balance < 100:
-        print("Balance is nearly gone")
+    if bet >= balance:
+        print("This is ok")
+
+    else:
+        print("This is NOT ok")
 
 
 
