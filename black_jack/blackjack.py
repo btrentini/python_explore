@@ -7,6 +7,13 @@ import deck as dk
 import player as pl
 import hand as hd
 
+def check_bets():
+    '''do nothing here'''
+
+    if balance < 100:
+        print("Balance is nearly gone")
+
+
 
 def play_again():
 
